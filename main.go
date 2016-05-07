@@ -18,6 +18,18 @@ type Config struct {
 	Username string `toml:"username"`
 }
 
+func setColor(c string) {
+	if c == "red" {
+		color.Set(color.FgRed)
+	} else if c == "yellow" {
+		color.Set(color.FgYellow)
+	} else if c == "green" {
+		color.Set(color.FgGreen)
+	} else if c == "purple" {
+		color.Set(color.FgMagenta)
+	}
+}
+
 func main() {
 	appKey := os.Getenv("TRELLO_APP_KEY")
 	token := os.Getenv("TRELLO_TOKEN")
@@ -71,15 +83,8 @@ func main() {
 
 				for _, card := range cards {
 					for _, label := range card.Labels {
-						if label.Color == "red" {
-							color.Set(color.FgRed)
-						} else if label.Color == "yellow" {
-							color.Set(color.FgYellow)
-						} else if label.Color == "green" {
-							color.Set(color.FgGreen)
-						} else if label.Color == "purple" {
-							color.Set(color.FgMagenta)
-						}
+						setColor(label.Color)
+						break
 					}
 
 					if card.Due != "" {
