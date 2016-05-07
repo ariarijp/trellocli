@@ -12,7 +12,7 @@ import (
 	"github.com/mitchellh/go-homedir"
 )
 
-type Config struct {
+type config struct {
 	AppKey   string `toml:"app_key"`
 	Token    string `toml:"token"`
 	Username string `toml:"username"`
@@ -41,15 +41,15 @@ func main() {
 			log.Fatal(err)
 		}
 
-		var config Config
-		_, err = toml.DecodeFile(home+"/.trelloclirc", &config)
+		var conf config
+		_, err = toml.DecodeFile(home+"/.trelloclirc", &conf)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		appKey = config.AppKey
-		token = config.Token
-		username = config.Username
+		appKey = conf.AppKey
+		token = conf.Token
+		username = conf.Username
 	}
 
 	trello, err := trello.NewAuthClient(appKey, &token)
