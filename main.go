@@ -79,8 +79,6 @@ func main() {
 							color.Set(color.FgGreen)
 						} else if label.Color == "purple" {
 							color.Set(color.FgMagenta)
-						} else {
-							fmt.Println(label)
 						}
 					}
 
