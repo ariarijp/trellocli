@@ -6,17 +6,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/BurntSushi/toml"
 	"github.com/VojtechVitek/go-trello"
 	"github.com/fatih/color"
 	"github.com/mitchellh/go-homedir"
+	"github.com/pelletier/go-toml"
 )
-
-type config struct {
-	AppKey   string `toml:"app_key"`
-	Token    string `toml:"token"`
-	Username string `toml:"username"`
-}
 
 func setColor(c string) {
 	if c == "red" {
@@ -41,15 +35,14 @@ func main() {
 			log.Fatal(err)
 		}
 
-		var conf config
-		_, err = toml.DecodeFile(home+"/.trelloclirc", &conf)
+		config, err := toml.LoadFile(home + "/.trelloclirc")
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		appKey = conf.AppKey
-		token = conf.Token
-		username = conf.Username
+		appKey = config.Get("app_key").(string)
+		token = config.Get("token").(string)
+		username = config.Get("username").(string)
 	}
 
 	trello, err := trello.NewAuthClient(appKey, &token)
