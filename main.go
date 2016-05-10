@@ -60,8 +60,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if len(boards) > 0 {
-		board := boards[0]
+	for _, board := range boards {
+		if board.Closed {
+			continue
+		}
+
 		fmt.Printf("* %v (%v)\n", board.Name, board.ShortUrl)
 
 		lists, err := board.Lists()
