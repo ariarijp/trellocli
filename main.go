@@ -65,8 +65,7 @@ func main() {
 			continue
 		}
 
-		fmt.Printf("# %v (%v)\n", board.Name, board.ShortUrl)
-		fmt.Println()
+		fmt.Printf("# %v (%v)\n\n", board.Name, board.ShortUrl)
 
 		lists, err := board.Lists()
 		if err != nil {
@@ -76,7 +75,7 @@ func main() {
 		for _, list := range lists {
 			cards, _ := list.Cards()
 			if len(cards) > 0 {
-				fmt.Println("*", list.Name)
+				fmt.Printf("## %s\n\n", list.Name)
 
 				for _, card := range cards {
 					for _, label := range card.Labels {
@@ -86,14 +85,16 @@ func main() {
 
 					if card.Due != "" {
 						t, _ := time.Parse(time.RFC3339Nano, card.Due)
-						fmt.Printf("  * %s %s\n", t.Format("[2006-01-02]"), card.Name)
+						fmt.Printf("* %s %s\n", t.Format("[2006-01-02]"), card.Name)
 					} else {
-						fmt.Printf("  * %s\n", card.Name)
+						fmt.Printf("* %s\n", card.Name)
 					}
 
 					color.Unset()
 				}
 			}
+
+			fmt.Println()
 		}
 
 		fmt.Println()
